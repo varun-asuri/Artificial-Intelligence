@@ -1,0 +1,20 @@
+The number one question on everyone's mind is: What is being tested for in the k-means grader?
+
+First, when the grader reports a 'K' that means the keyword was not found (or there was no colon after the keyword). If the grader reports an 'N' that means it is unhappy about the value or values.  If there is a script error, then whatever score there would have been is reduced by 20%.  There are nine items, and each is worth 10 points except the 7th one, which is worth 20.
+
+Now the first half is strictly image processing basics, to ensure that everyone can process an image properly.
+1) The dimensions (if you mix the order up, you get 5 points)
+2) The number of pixels in the image
+3) The number of distinct pixel values
+4) The most common pixel value
+5) The number of pixels having the most common pixel value
+
+You don't have to do any k-means at all to do the above.  However, at this point, there's no help for it, k-means can no longer be put off.  It would be nice to break up the testing of it, but I don't see it.  Therefore, you report the conclusion of your k-means (of course the clever person is showing, upon each iteration, the vector of how many pixels are newly joining each camp until there is convergence).  So you wind up with some means (listed as triples of ->real<- numbers) along with the number of pixels in that mean's camp.
+
+6) Number consistency check.  Using the means that you, gentle user, have come up with, the grader checks which mean each pixel in the image should go to and counts them up.  If your counts agree with the grader's counts, then you are the lucky recipient of 10 more points.  Note that you can use this as a check of your very first step.  You start with k distinct means.  Have you chucked each pixel into the correct camp?  If you bail out of your code at this point (printing the means/counts) the grader can validate that you are starting off OK.
+
+7) K-means consistency check.  The meat.  You are done with k-means when pixels are no longer hopping from one camp to another, and this is what is checked.  K-means does not guarantee convergence to a unique mean.  So the grader takes the means that your code has come up with, and checks to ensure that your values are stable and that there is no more hopping of pixels between means. Since this is the meat of k-means, it is worth 20 points.
+
+8) Once you have done your k-means, you should take each pixel in the original image and replace it with the closest integer approximation to the mean that it is closest to.  Then save this image as designated.  You get 10 points if this image is found.  IMPORTANT: The PDF for the lab spec is incorrect.  It should be saved as a .png and not as a .jpg (.jpg files are lossy and what the grader receives might not be what you thought to be saving).  The instructions you get when you click the + sign on the graders web page (after selecting for K-means) looks to be correct.
+
+9) Finally, for a final 10 points, for each integer mean approximation in the saved image, identify how many distinct regions there are for that pixel value using flood fill.

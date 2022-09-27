@@ -1,0 +1,47 @@
+1: If you use PyCharm to code, you should use the built in terminal on PyCharm.
+
+2: You should use "python3" and "pip3" wherever possible.
+
+3: If you are running Mac and you are getting a certificate error when running
+the ByesIO thing, in the MAC terminal you should run:
+/Applications/Python\ 3.7/Install\ Certificates.command
+
+4: Sometimes under Windows, py should be used in place of python
+
+# if you have PIL already installed, you must uninstall it
+# pip install Pillow  OR  pip3 install Pillow
+# of python3 -m pip install Pillow
+>>> print (PIL.PILLOW_VERSION)
+6.0.0
+>>> from PIL import Image
+>>> import urllib.request
+>>> import io
+>>> URL = 'http://www.w3schools.com/css/trolltunga.jpg'
+>>> f = io.BytesIO(urllib.request.urlopen(URL).read())
+>>> img = Image.open(f)
+>>> img.show()
+>>> print(img.size)     # Gives (width, height)
+(1000, 300)
+>>> pix = img.load()
+>>> print(pix[2,5])
+(24, 29, 61)
+
+# you can set pixels equal to an RGB tuple: pix[x,y] = (rValue, gValue, bValue)
+# Example:
+# for x in range(img.size[0]):
+#   for y in range(img.size[1]):
+#     if sum(pix[x,y])==255: pix[x,y] = (255, 0, 0)
+# ...
+# img.show()
+
+# Lab for Wednesday is to consider each pixel in the image
+# If it's in the bottom third of possibilities, replace it with a 0,
+# If it's in the top third of possibilities, replace it with a 255 (or 254)
+# Otherwise, replace it with a 127
+
+# Here is the solution to Wednesday's lab
+>>> for x in range(img.size[0]):
+...   for y in range(img.size[1]):
+...     pix[x,y] = tuple(127*((t>255/3)+(t>510/3)) for t in [*pix[x,y]])
+...
+>>> img.show()
